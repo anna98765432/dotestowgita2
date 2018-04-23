@@ -16,14 +16,6 @@ public class LoginTest {
         Assert.assertTrue(driver.findElement(By.cssSelector("[href$='logout.htm']")).isDisplayed());
     }
 
-    // to do wywalenia
-    @Test
-    public void shouldLoginAnna() {
-        driver.get("http://parabank.parasoft.com");
-        driver.findElement(By.cssSelector("[name=username]")).sendKeys("John");
-        driver.findElement(By.cssSelector("[name=password]")).sendKeys("123123!$L");
-        driver.findElement(By.cssSelector(".login .button")).click();
-        Assert.assertTrue(driver.findElement(By.cssSelector("[href$='logout.htm']")).isDisplayed());
-    }
+
 
 }
