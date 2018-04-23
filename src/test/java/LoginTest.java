@@ -8,16 +8,17 @@ public class LoginTest {
     WebDriver driver = new ChromeDriver();
 
     @Test
-    public void shouldLogin(){
+    public void shouldLogin() {
         driver.get("http://parabank.parasoft.com");
         driver.findElement(By.cssSelector("[name=username]")).sendKeys("John");
         driver.findElement(By.cssSelector("[name=password]")).sendKeys("123123!$L");
         driver.findElement(By.cssSelector(".login .button")).click();
         Assert.assertTrue(driver.findElement(By.cssSelector("[href$='logout.htm']")).isDisplayed());
     }
-// to do wywalenia
+
+    // to do wywalenia
     @Test
-    public void shouldLoginAnna(){
+    public void shouldLoginAnna() {
         driver.get("http://parabank.parasoft.com");
         driver.findElement(By.cssSelector("[name=username]")).sendKeys("John");
         driver.findElement(By.cssSelector("[name=password]")).sendKeys("123123!$L");
