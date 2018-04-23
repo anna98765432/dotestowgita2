@@ -25,9 +25,8 @@ public class RegistrationTest {
         ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 try {
-                    return ((Long)((JavascriptExecutor)driver).executeScript("return jQuery.active") == 0);
-                }
-                catch (Exception e) {
+                    return ((Long) ((JavascriptExecutor) driver).executeScript("return jQuery.active") == 0);
+                } catch (Exception e) {
                     return true;
                 }
             }
@@ -36,7 +35,7 @@ public class RegistrationTest {
         // wait for Javascript to load
         ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
-                return ((JavascriptExecutor)driver).executeScript("return document.readyState")
+                return ((JavascriptExecutor) driver).executeScript("return document.readyState")
                         .toString().equals("complete");
             }
         };
@@ -44,9 +43,8 @@ public class RegistrationTest {
     }
 
 
-
     public void signIn(String name, String name2, String street, String city, String state, String postCode,
-                       String customerNumer){
+                       String customerNumer) {
 
         driver.findElement(By.xpath("//input[@id='customer.firstName']")).sendKeys(name);
         driver.findElement(By.xpath("//input[@id='customer.lastName']")).sendKeys(name2);
@@ -67,8 +65,8 @@ public class RegistrationTest {
     @Test
     public void shouldRegister() {
         driver.get(urlRegistration);
-        signIn("Barbara","Rabarbar","Mikołajska", "Warszawa", "Mazowieckie",
-                "30-121","12345678");
+        signIn("Barbara", "Rabarbar", "Mikołajska", "Warszawa", "Mazowieckie",
+                "30-121", "12345678");
         driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(username2 + "ania");
         driver.findElement(By.cssSelector("input[id='customer.password']")).sendKeys("barbara123");
         driver.findElement(By.cssSelector("#repeatedPassword")).sendKeys("barbara123");
@@ -128,8 +126,7 @@ public class RegistrationTest {
         driver.findElement(By.cssSelector("input[id='repeatedPassword']")).sendKeys("anna1234");
         driver.findElement(By.cssSelector("input[value='Register']")).click();
         String pageSource = driver.getPageSource();
-        if (pageSource.contains("Your account was created successfully."))
-        {
+        if (pageSource.contains("Your account was created successfully.")) {
             driver.get(urlRegistration);
             driver.findElement(By.xpath("//input[@id='customer.firstName']")).sendKeys("Anna");
             driver.findElement(By.xpath("//input[@id='customer.lastName']")).sendKeys("Michalska");
@@ -143,7 +140,7 @@ public class RegistrationTest {
             driver.findElement(By.cssSelector("input[id='repeatedPassword']")).sendKeys("anna1234");
             driver.findElement(By.cssSelector("input[value='Register']")).click();
 
-        }else {
+        } else {
             String pageSource1 = driver.getPageSource();
             Assert.assertTrue(pageSource1.contains("This username already exists."));
         }
