@@ -6,10 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+import pages.IndexPage;
 import pages.RegistrationPage;
 import sun.security.pkcs.SignerInfo;
 
@@ -21,6 +19,7 @@ public class RegistrationTest {
 
     WebDriver driver;
     RegistrationPage registrationPage;
+    IndexPage indexPage;
 
 
     @BeforeMethod
@@ -38,7 +37,8 @@ public class RegistrationTest {
     public void shouldRegister() {
         registrationPage.openRegister();
         registrationPage.signIn("Barbara", "Rabarbar", "Mikołajska", "Warszawa", "Mazowieckie",
-                "30-121", "12345678", "ania", "barbara123", "barbara123");
+                "30-121", "12345678", "barbara123", "barbara123", "barbara123");
+        registrationPage.fillRandomUsername();
         registrationPage.clickRegister();
         Assert.assertTrue(registrationPage.hasUserRegisteredAccount());
     }
@@ -48,7 +48,8 @@ public class RegistrationTest {
     public void shouldNotRegisterBecauseOfNotRepatingPassword() {
         registrationPage.openRegister();
         registrationPage.signIn("Jan", "Banan", "Aleje", "Kraków", "Małopolskie", "31-789",
-                "98765432", "beata", "barbara123", "barbara12");
+                "98765432", "", "barbara123", "barbara12");
+        registrationPage.fillRandomUsername();
         registrationPage.clickRegister();
         Assert.assertTrue(registrationPage.doesPasswordNotMatch());
     }
@@ -57,32 +58,34 @@ public class RegistrationTest {
     public void shouldNotRegisterBecauseOfNotGivingLastName() {
         registrationPage.openRegister();
         registrationPage.signIn("Alicja", "", "Nadwiślańska", "Wrocław", "Dolnośląskie", "44-789",
-                "3467890", "alicja", "alicja123", "alicja123");
+                "3467890", "", "alicja123", "alicja123");
+        registrationPage.fillRandomUsername();
         registrationPage.clickRegister();
         Assert.assertTrue(registrationPage.isLastNameMissing());
     }
 
+
     @Test
-    public void shouldNotRegisterBecauseOfRepeatingUser() {
+    public void shouldNotRegisterBecauseOfRepeatingUserName() {
+        indexPage = new IndexPage(driver);
         registrationPage.openRegister();
-        registrationPage.signIn("Anna", "Michalska", "Piłsudskiego", "Gdańsk", "Pomorskie", "34-123",
-                "34567890", "AnnaEMIN", "anna1234", "anna1234");
+        registrationPage.signIn("Anna", "Dopowtorzenia", "Miarki", "Gliwice", "Slaskie",
+                "44-100", "12345678", "", "barbara123", "barbara123");
+        registrationPage.fillRandomUsername();
         registrationPage.clickRegister();
-
-        if (driver.findElement(By.xpath("//div[@id='rightPanel']/p")).getText().contains("Your account was created successfully.")) {
-            registrationPage.openRegister();
-            registrationPage.signIn("Anna", "Michalska", "Piłsudskiego", "Gdańsk", "Pomorskie", "34-123",
-                    "34567890", "AnnaEMIN", "anna1234", "anna1234");
-            registrationPage.clickRegister();
-
-        } else {
-            Assert.assertTrue(registrationPage.repeatedUsername());
-        }
-
-
+        registrationPage.logOut();
+        indexPage.register();
+        registrationPage.signIn("Anna", "Dopowtorzenia", "Miarki", "Gliwice", "Slaskie",
+                "44-100", "12345678", "", "barbara123", "barbara123");
+        registrationPage.repeatRandomUsername();
+        registrationPage.clickRegister();
+        registrationPage.waitForJStoLoad();
+        Assert.assertTrue(registrationPage.repeatedUsername());
     }
 
 
 }
+
+
 
 

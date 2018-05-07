@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public class RegistrationPage extends MainPage {
 
+
     public RegistrationPage(WebDriver driver) {
         super(driver);
     }
@@ -48,10 +49,7 @@ public class RegistrationPage extends MainPage {
 
 
     public void signIn(String name, String name2, String street, String city, String state, String postCode,
-                       String customerNumer, String ania, String password, String repeatedPassword) {
-
-        String username = UUID.randomUUID().toString();
-        String username2 = username.substring(0, 10);
+                       String customerNumer, String username, String password, String repeatedPassword) {
 
         driver.findElement(By.xpath("//input[@id='customer.firstName']")).sendKeys(name);
         driver.findElement(By.xpath("//input[@id='customer.lastName']")).sendKeys(name2);
@@ -60,12 +58,44 @@ public class RegistrationPage extends MainPage {
         driver.findElement(By.xpath("//input[@id='customer.address.state']")).sendKeys(state);
         driver.findElement(By.xpath("//input[@id='customer.address.zipCode']")).sendKeys(postCode);
         driver.findElement(By.cssSelector("input[id='customer.ssn']")).sendKeys(customerNumer);
-//        id$='customer.ssn'
-        driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(ania + username2);
+        driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(username);
         driver.findElement(By.cssSelector("input[id='customer.password']")).sendKeys(password);
         driver.findElement(By.cssSelector("input[id='repeatedPassword']")).sendKeys(repeatedPassword);
 
     }
+
+
+    public void fillRandomSSN() {
+        driver.findElement(By.cssSelector("input[id='customer.ssn']")).clear();
+        String SSN1 = UUID.randomUUID().toString();
+        this.SSN2 = SSN1.substring(0, 10);
+        driver.findElement(By.cssSelector("input[id='customer.ssn']")).sendKeys(SSN2);
+        MainPage.keepsSSN = SSN2;
+
+    }
+
+
+    public void fillRandomUsername() {
+        driver.findElement(By.cssSelector("input[id='customer.username']")).clear();
+        String username = UUID.randomUUID().toString();
+        this.username2 = username.substring(0, 10);
+        driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(username2);
+        MainPage.keepsUsername = username2;
+
+    }
+
+
+    public void repeatRandomUsername() {
+        driver.findElement(By.cssSelector("input[id='customer.username']")).clear();
+        driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(MainPage.keepsUsername.toString());
+
+    }
+
+    public void logOut() {
+        driver.findElement(By.xpath("//a[contains(@href,'logout.htm')]")).click();
+    }
+
+
 
 }
 
