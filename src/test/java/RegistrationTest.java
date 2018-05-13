@@ -15,72 +15,56 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 
 
-public class RegistrationTest {
+public class RegistrationTest extends MainTest {
 
-    WebDriver driver;
-    RegistrationPage registrationPage;
-    IndexPage indexPage;
+    String randomUsername;
 
 
-    @BeforeMethod
-    public void before() {
-        driver = new ChromeDriver();
-        registrationPage = new RegistrationPage(driver);
-    }
+    @BeforeClass
+    public void beforeRegistration() {
+        super.before();
+        randomUsername = generateRandomUsername();
 
-    @AfterMethod
-    public void after() {
-        driver.close();
+        indexPage.openParabank().register().setFirstName("Anna").setLastName("Dopowtorzenia").
+                setStreet("Miarki").setCity("Gliwice").setState("Slaskie").setZipCode("44-100").setSsn("12345678")
+                .setUsername(randomUsername).setPassword("barbara123").setRepeatedPassword("barbara123").clickRegister()
+                .logOut();
+        after();
     }
 
     @Test
     public void shouldRegister() {
-        registrationPage.openRegister();
-        registrationPage.signIn("Barbara", "Rabarbar", "Mikołajska", "Warszawa", "Mazowieckie",
-                "30-121", "12345678", "barbara123", "barbara123", "barbara123");
-        registrationPage.fillRandomUsername();
-        registrationPage.clickRegister();
-        Assert.assertTrue(registrationPage.hasUserRegisteredAccount());
+        indexPage.openParabank().register().setFirstName("Barbara").setLastName("Rabarbar").
+                setStreet("Mikołajska").setCity("Warszawa").setState("Mazowieckie").setZipCode("30-121").setSsn("12345678").setUsername(generateRandomUsername())
+                .setPassword("barbara123").setRepeatedPassword("barbara123").clickRegister().
+                registrationAssertion.hasUserRegisteredAccount();
     }
 
 
     @Test
     public void shouldNotRegisterBecauseOfNotRepatingPassword() {
-        registrationPage.openRegister();
-        registrationPage.signIn("Jan", "Banan", "Aleje", "Kraków", "Małopolskie", "31-789",
-                "98765432", "", "barbara123", "barbara12");
-        registrationPage.fillRandomUsername();
-        registrationPage.clickRegister();
-        Assert.assertTrue(registrationPage.doesPasswordNotMatch());
+        indexPage.openParabank().register().setFirstName("Jan").setLastName("Banan").
+                setStreet("Aleje").setCity("Kraków").setState("Małopolskie").setZipCode("30-908").setSsn("98765432").setUsername(generateRandomUsername())
+                .setPassword("barbara123").setRepeatedPassword("barbara12").clickRegisterFail().
+                registrationAssertion.doesPasswordNotMatch();
     }
 
     @Test
     public void shouldNotRegisterBecauseOfNotGivingLastName() {
-        registrationPage.openRegister();
-        registrationPage.signIn("Alicja", "", "Nadwiślańska", "Wrocław", "Dolnośląskie", "44-789",
-                "3467890", "", "alicja123", "alicja123");
-        registrationPage.fillRandomUsername();
-        registrationPage.clickRegister();
-        Assert.assertTrue(registrationPage.isLastNameMissing());
+        indexPage.openParabank().register().setFirstName("Alicja").setStreet("Nadwiślańska").setCity("Wrocław").setState("Dolnośląskie")
+                .setZipCode("44-789").setSsn("98765432").setUsername(generateRandomUsername())
+                .setPassword("alicja123").setRepeatedPassword("alicja123").clickRegisterFail()
+                .registrationAssertion.isLastNameMissing();
     }
 
 
     @Test
     public void shouldNotRegisterBecauseOfRepeatingUserName() {
-        indexPage = new IndexPage(driver);
-        registrationPage.openRegister();
-        registrationPage.signIn("Anna", "Dopowtorzenia", "Miarki", "Gliwice", "Slaskie",
-                "44-100", "12345678", "", "barbara123", "barbara123");
-        registrationPage.fillRandomUsername();
-        registrationPage.clickRegister();
-        registrationPage.logOut();
-        indexPage.register();
-        registrationPage.signIn("Anna", "Dopowtorzenia", "Miarki", "Gliwice", "Slaskie",
-                "44-100", "12345678", "", "barbara123", "barbara123");
-        registrationPage.repeatRandomUsername();
-        registrationPage.clickRegister();
-        registrationPage.waitForJStoLoad();
-        Assert.assertTrue(registrationPage.repeatedUsername());
+
+        indexPage.openParabank().register().setFirstName("Anna").setLastName("Dopowtorzenia").
+                setStreet("Miarki").setCity("Gliwice").setState("Slaskie").setZipCode("44-100").setSsn("12345678")
+                .setUsername(randomUsername).setPassword("barbara123").setRepeatedPassword("barbara123").clickRegisterFail()
+                .registrationAssertion.repeatedUsername();
     }
 
 

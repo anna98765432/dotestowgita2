@@ -1,99 +1,113 @@
 package pages;
 
+import assertions.LoginAssertion;
+import assertions.RegistrationAssertion;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import java.util.UUID;
 
 public class RegistrationPage extends MainPage {
 
+    public RegistrationAssertion registrationAssertion;
+
+@FindBy(css = "input[value='Register']") private WebElement registerButton;
+
+@FindBy(xpath = "//input[@id='customer.firstName']") private WebElement firstNameInput;
+@FindBy(xpath = "//input[@id='customer.lastName']") private WebElement lastNameInput;
+@FindBy(xpath = "//input[@id='customer.address.street']") private WebElement streetInput;
+@FindBy(xpath = "//input[@id='customer.address.city']") private WebElement cityInput;
+@FindBy(xpath = "//input[@id='customer.address.state']") private WebElement stateInput;
+@FindBy(xpath = "//input[@id='customer.address.zipCode']") private WebElement zipCodeInput;
+@FindBy(css = "input[id='customer.ssn']") private WebElement ssnInput;
+@FindBy(css = "input[id='customer.username']") private WebElement usernameInput;
+@FindBy(css = "input[id='customer.password']") private WebElement passwordInput;
+@FindBy(css = "input[id='repeatedPassword']") private WebElement repeatedPasswordInput;
+
+
+
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+        registrationAssertion = new RegistrationAssertion(driver);
     }
 
-    public void openRegister() {
+    public RegistrationPage openRegister() {
         driver.get("http://parabank.parasoft.com/parabank/register.htm");
-    }
+        return  this;
+    } //to moze do zmiany wywalenia
 
-    public void clickRegister() {
-        driver.findElement(By.cssSelector("input[value='Register']")).click();
+    public AccountPage clickRegister() {
+        registerButton.click();
+        return new AccountPage(driver);
 
-    }
+    } // to ewentualnie do zmiany bo moze tu trzeva zrobic registration succesfull page
 
-    public boolean hasUserRegisteredAccount() {
-        return driver.findElement(By.cssSelector("[href$='logout.htm']")).isDisplayed();
-
-    }
-
-    public boolean doesPasswordNotMatch() {
-        WebElement text1 = driver.findElement(By.xpath("//span[@id='repeatedPassword.errors']"));
-        return text1.getText().contains("Passwords did not match.");
-    }
-
-    public boolean isLastNameMissing() {
-        WebElement text1 = driver.findElement(By.xpath("//span[@id='customer.lastName.errors']"));
-        return text1.getText().contains("Last name is required.");
-    }
-
-    public boolean hasUserCreatedAccount() {
-        WebElement text1 = driver.findElement(By.xpath("//div[@id='rightPanel']/p"));
-        return driver.findElement(By.xpath("//div[@id='rightPanel']/p")).getText().contains("Your account was created successfully.");
-    }
-
-    public boolean repeatedUsername() {
-        return driver.findElement(By.xpath("//span[@id='customer.username.errors']")).getText().contains("This username already exists.");
-    }
-
-
-    public void signIn(String name, String name2, String street, String city, String state, String postCode,
-                       String customerNumer, String username, String password, String repeatedPassword) {
-
-        driver.findElement(By.xpath("//input[@id='customer.firstName']")).sendKeys(name);
-        driver.findElement(By.xpath("//input[@id='customer.lastName']")).sendKeys(name2);
-        driver.findElement(By.xpath("//input[@id='customer.address.street']")).sendKeys(street);
-        driver.findElement(By.xpath("//input[@id='customer.address.city']")).sendKeys(city);
-        driver.findElement(By.xpath("//input[@id='customer.address.state']")).sendKeys(state);
-        driver.findElement(By.xpath("//input[@id='customer.address.zipCode']")).sendKeys(postCode);
-        driver.findElement(By.cssSelector("input[id='customer.ssn']")).sendKeys(customerNumer);
-        driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(username);
-        driver.findElement(By.cssSelector("input[id='customer.password']")).sendKeys(password);
-        driver.findElement(By.cssSelector("input[id='repeatedPassword']")).sendKeys(repeatedPassword);
+    public RegistrationPage clickRegisterFail() {
+        registerButton.click();
+        return new RegistrationPage(driver);
 
     }
 
 
-    public void fillRandomSSN() {
-        driver.findElement(By.cssSelector("input[id='customer.ssn']")).clear();
-        String SSN1 = UUID.randomUUID().toString();
-        this.SSN2 = SSN1.substring(0, 10);
-        driver.findElement(By.cssSelector("input[id='customer.ssn']")).sendKeys(SSN2);
-        MainPage.keepsSSN = SSN2;
+    public RegistrationPage setFirstName(String firstName){
+        firstNameInput.sendKeys(firstName);
+        return this;
+    }
 
+    public RegistrationPage setLastName(String lastName){
+        lastNameInput.sendKeys(lastName);
+        return this;
+    }
+
+    public RegistrationPage setStreet(String street){
+        streetInput.sendKeys(street);
+        return this;
+    }
+
+    public RegistrationPage setCity(String city){
+        cityInput.sendKeys(city);
+        return this;
     }
 
 
-    public void fillRandomUsername() {
-        driver.findElement(By.cssSelector("input[id='customer.username']")).clear();
-        String username = UUID.randomUUID().toString();
-        this.username2 = username.substring(0, 10);
-        driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(username2);
-        MainPage.keepsUsername = username2;
+    public RegistrationPage setState(String state){
+        stateInput.sendKeys(state);
+        return this;
+    }
 
+    public RegistrationPage setZipCode(String zipCode){
+        zipCodeInput.sendKeys(zipCode);
+        return this;
+    }
+
+    public RegistrationPage setSsn(String ssn){
+        ssnInput.sendKeys(ssn);
+        return this;
+    }
+
+    public RegistrationPage setUsername(String username){
+        usernameInput.sendKeys(username);
+        return this;
+    }
+
+    public RegistrationPage setPassword(String password){
+        passwordInput.sendKeys(password);
+        return this;
+    }
+
+    public RegistrationPage setRepeatedPassword(String password){
+        repeatedPasswordInput.sendKeys(password);
+        return this;
     }
 
 
-    public void repeatRandomUsername() {
-        driver.findElement(By.cssSelector("input[id='customer.username']")).clear();
-        driver.findElement(By.cssSelector("input[id='customer.username']")).sendKeys(MainPage.keepsUsername.toString());
 
-    }
-
-    public void logOut() {
-        driver.findElement(By.xpath("//a[contains(@href,'logout.htm')]")).click();
-    }
 
 
 

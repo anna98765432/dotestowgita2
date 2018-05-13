@@ -2,40 +2,58 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class IndexPage extends MainPage {
+
+    @FindBy(css = "[name=username]") private WebElement userNameInput;
+    @FindBy(css = "[name=password]") private WebElement passwordInput;
+    @FindBy(css = ".login .button") private WebElement loginButton;
+    @FindBy(xpath = "//a[contains(@href,'register.htm')]") private WebElement registerText;
+    @FindBy(xpath = "//a[contains(@href,'lookup.htm')]") private WebElement forgotLoginButton;
 
 
     public IndexPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
 
-    public void openParabank() {
+    public IndexPage openParabank() {
         driver.get("http://parabank.parasoft.com");
         waitForJStoLoad();
+        return this;
     }
 
-    public void fillUsername(String username) {
-        driver.findElement(By.cssSelector("[name=username]")).sendKeys(username);
+
+    public IndexPage fillUsername(String username) {
+        userNameInput.sendKeys(username);
+        return this;
     }
 
-    public void fillPassword(String password) {
-        driver.findElement(By.cssSelector("[name=password]")).sendKeys(password);
+    public IndexPage fillPassword(String password) {
+        passwordInput.sendKeys(password);
+        return this;
 
     }
 
-    public void clickLogin() {
-        driver.findElement(By.cssSelector(".login .button")).click();
+    public AccountPage clickLogin() {
+        loginButton.click();
+        return new AccountPage(driver);
     }
 
-    public void register() {
-        driver.findElement(By.xpath("//a[contains(@href,'register.htm')]")).click();
+    public RegistrationPage register() {
+        registerText.click();
+        return new RegistrationPage(driver);
     }
 
-    public void remindLoginInfo() {
-        driver.findElement(By.xpath("//a[contains(@href,'lookup.htm')]")).click();
+    public LookUpPage remindLoginInfo() {
+        forgotLoginButton.click();
+        return new LookUpPage(driver);
     }
+
 
 
 }

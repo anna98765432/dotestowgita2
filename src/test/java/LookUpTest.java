@@ -9,50 +9,40 @@ import pages.IndexPage;
 import pages.LookUpPage;
 import pages.RegistrationPage;
 
-public class LookUpTest {
-    WebDriver driver;
-    LookUpPage lookUpPage;
-    RegistrationPage registrationPage;
-    IndexPage indexPage;
+public class LookUpTest extends MainTest {
+    String lvRandomSSN;
 
 
-    @BeforeMethod
-    public void before() {
-        driver = new ChromeDriver();
-        lookUpPage = new LookUpPage(driver);
-        indexPage = new IndexPage(driver);
-        registrationPage = new RegistrationPage(driver);
+    @BeforeClass
+    public void beforeLookUp() {
+        lvRandomSSN = generateRandomSsn();
+        super.before();
+        indexPage.openParabank().register().setFirstName("Anna").setLastName("Jarzyna").setStreet("Malinowa")
+                .setCity("Opole").setState("Opolskie").setZipCode("21-098").setSsn(lvRandomSSN).setUsername(generateRandomUsername())
+                .setPassword("anna123").setRepeatedPassword("anna123").clickRegister().logOut();
+        after();
+
     }
 
-    @AfterMethod
-    public void after() {
-        driver.close();
-    }
 
     @Test
     public void shouldRecoverPassword() {
 
-        registrationPage.openRegister();
-        registrationPage.signIn("Anna", "Jarzyna", "Malinowa", "Zakopane", "Opolskie", "2",
-                "", "", "jarzyna123", "jarzyna123");
-        registrationPage.fillRandomUsername();
-        registrationPage.fillRandomSSN();
-        registrationPage.clickRegister();
-        registrationPage.logOut();
-        indexPage.waitForJStoLoad();
+        indexPage.openParabank();
         indexPage.remindLoginInfo();
-        lookUpPage.fillInLoginInfo("Anna", "Jarzyna", "Malinowa", "Zakopane", "Opolskie",
-                "2", "");
-        lookUpPage.repeatRandomSSN();
+        lookUpPage.fillInLoginInfo("Anna", "Jarzyna", "Malinowa", "Opole", "Opolskie",
+                "21-098", lvRandomSSN);
         lookUpPage.clickFindLoginInfo();
         Assert.assertTrue(lookUpPage.hasPasswodBeenRecovered());
     }
 
     @Test
     public void shouldNotRecoverPasswordBecauseOfNotProvidingSSN() {
+        indexPage.openParabank();
+        indexPage.remindLoginInfo();
         lookUpPage.openLookUpPage();
-        lookUpPage.fillInLoginInfo("Anna", "Jarzyna", "Malinowa", "Zakopane", "Opolskie",
-                "2", "");
+        lookUpPage.fillInLoginInfo("Anna", "Jarzyna", "Malinowa", "Opole", "Opolskie",
+                "21-098", "");
         lookUpPage.clickFindLoginInfo();
         Assert.assertTrue(lookUpPage.isUserMissingSSN());
 
@@ -60,6 +50,8 @@ public class LookUpTest {
 
     @Test
     public void shouldNotRecoverPasswordBecauseUserDoesntExist() {
+        indexPage.openParabank();
+        indexPage.remindLoginInfo();
         lookUpPage.openLookUpPage();
         lookUpPage.fillInLoginInfo("xyz", "xyz", "XXX", "TYR", "XZY",
                 "456", "09876543");

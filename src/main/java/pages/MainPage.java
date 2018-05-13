@@ -8,10 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainPage {
     protected WebDriver driver;
-    public String SSN2;
-    public String username2;
-    public static String keepsSSN;
-    public static String keepsUsername;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
