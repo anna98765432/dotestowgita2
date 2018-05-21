@@ -14,7 +14,7 @@ public class LoginTest extends MainTest {
     @BeforeClass
     public void before1() {
         lvUserName = generateRandomUsername();
-        super.before();
+        beforeTest();
         indexPage.openParabank().register().setFirstName("Mariola").setLastName("Michalska").setStreet("Wiślana").setCity("Warszawa")
                 .setState("Mazowieckie").setZipCode("31-122").setSsn("12345678").setUsername(lvUserName)
                 .setPassword("barbara123").setRepeatedPassword("barbara123").clickRegister();

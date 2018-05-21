@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class IndexPage extends MainPage {
 
+    private String username;
+
     @FindBy(css = "[name=username]") private WebElement userNameInput;
     @FindBy(css = "[name=password]") private WebElement passwordInput;
     @FindBy(css = ".login .button") private WebElement loginButton;

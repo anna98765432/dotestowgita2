@@ -42,11 +42,11 @@ public class RegistrationPage extends MainPage {
         return  this;
     } //to moze do zmiany wywalenia
 
-    public AccountPage clickRegister() {
+    public RegistrationSuccessPage clickRegister() {
         registerButton.click();
-        return new AccountPage(driver);
+        return new RegistrationSuccessPage(driver);
 
-    } // to ewentualnie do zmiany bo moze tu trzeva zrobic registration succesfull page
+    }
 
     public RegistrationPage clickRegisterFail() {
         registerButton.click();

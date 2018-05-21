@@ -45,7 +45,7 @@ public class MainTest {
 
 
     @BeforeMethod
-    public void before() {
+    public void beforeTest() {
         System.setProperty("webdriver.chrome.driver", "C:\\drivers\\chromedriver.exe");
         driver = new ChromeDriver();
         indexPage = new IndexPage(driver);
@@ -54,7 +54,7 @@ public class MainTest {
     }
 
     @AfterMethod
-    public void after() {
+    public void afterTest() {
         driver.close();
     }
 

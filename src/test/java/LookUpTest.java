@@ -16,11 +16,11 @@ public class LookUpTest extends MainTest {
     @BeforeClass
     public void beforeLookUp() {
         lvRandomSSN = generateRandomSsn();
-        super.before();
+        beforeTest();
         indexPage.openParabank().register().setFirstName("Anna").setLastName("Jarzyna").setStreet("Malinowa")
                 .setCity("Opole").setState("Opolskie").setZipCode("21-098").setSsn(lvRandomSSN).setUsername(generateRandomUsername())
                 .setPassword("anna123").setRepeatedPassword("anna123").clickRegister().logOut();
-        after();
+        afterTest();
 
     }
 

@@ -1,6 +1,7 @@
 package pages;
 
 import assertions.LoginAssertion;
+import assertions.NewAccountAssertion;
 import assertions.RegistrationAssertion;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +13,8 @@ import org.testng.Assert;
 public class AccountPage extends MainPage{
     public LoginAssertion loginAssertion;
     public RegistrationAssertion registrationAssertion;
-    @FindBy(xpath = "//a[contains(@href,'logout.htm')]") private WebElement logoutText;
+
+    @FindBy(xpath = "//a[contains(@href,'openaccount.htm')]") private WebElement openAccountText;
 
     public AccountPage(WebDriver driver) {
 
@@ -20,12 +22,16 @@ public class AccountPage extends MainPage{
         PageFactory.initElements(driver, this);
         loginAssertion = new LoginAssertion(driver);
         registrationAssertion = new RegistrationAssertion(driver);
+
     }
 
-    public IndexPage logOut() {
-        logoutText.click();
-        return new IndexPage(driver);
+    public OpenAccountPage openNewAccount (){
+        openAccountText.click();
+        return new OpenAccountPage(driver);
     }
+
+
+
 
 
 
