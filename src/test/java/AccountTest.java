@@ -20,6 +20,7 @@ public class AccountTest extends MainTest {
                 "Slaskie", "44-100", "987654321", randomUsername, "barbara123",
                 "barbara123"))
                 .logOut();
+//        start = indexPage.run(new LoginScenario(randomUsername, "barbara123"));
 
 
     }
@@ -35,7 +36,7 @@ public class AccountTest extends MainTest {
     @Test
     public void shouldAddAccount() {
         indexPage.run(new LoginScenario(randomUsername, "barbara123"))
-        .run(new AddAccountScenario("SAVINGS"))
+                .run(new AddAccountScenario("SAVINGS"))
                 .newAccountAssertion.hasUserOpenedNewAccount();
 
 
