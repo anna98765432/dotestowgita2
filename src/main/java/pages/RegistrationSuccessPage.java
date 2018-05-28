@@ -6,11 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class RegistrationSuccessPage extends MainPage{
+public class RegistrationSuccessPage extends LoggedInPage{
 
     public RegistrationAssertion registrationAssertion;
 
-    @FindBy(xpath = "//a[contains(@href,'logout.htm')]") private WebElement logoutText;
+
 
     public RegistrationSuccessPage(WebDriver driver) {
         super(driver);
@@ -18,10 +18,7 @@ public class RegistrationSuccessPage extends MainPage{
         registrationAssertion = new RegistrationAssertion(driver);
     }
 
-    public IndexPage logOut() {
-        logoutText.click();
-        return new IndexPage(driver);
-    }
+
 
 
 

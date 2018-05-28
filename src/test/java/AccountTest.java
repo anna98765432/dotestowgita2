@@ -13,30 +13,29 @@ public class AccountTest extends MainTest {
     private String randomUsername;
 
     @BeforeClass
-    public void before() {
-        beforeTest();
+    @Parameters({"url","firstName1"})
+    public void before(String url, String firstName1) {
+    beforeTest(url);
         randomUsername = generateRandomUsername();
-        indexPage.run(new RegistrationScenario("Anna", "Dopowtorzenia", "Miarki", "Gliwice",
+        indexPage.run(new RegistrationScenario(firstName1, "Dopowtorzenia", "Miarki", "Gliwice",
                 "Slaskie", "44-100", "987654321", randomUsername, "barbara123",
                 "barbara123"))
-                .logOut();
-//        start = indexPage.run(new LoginScenario(randomUsername, "barbara123"));
+                .menu.logOut();
 
 
     }
 
-//    @BeforeTest
-//    public void before1(){
-//        beforeTest();
-//        start = indexPage.run(new LoginScenario(randomUsername, "barbara123"));
-//
-//    }
+    @BeforeMethod
+    public void prepare(){
+        start = indexPage.run(new LoginScenario(randomUsername, "barbara123"));
+
+    }
 
 
-    @Test
+
+   @Test
     public void shouldAddAccount() {
-        indexPage.run(new LoginScenario(randomUsername, "barbara123"))
-                .run(new AddAccountScenario("SAVINGS"))
+        start.menu.run(new AddAccountScenario("SAVINGS"))
                 .newAccountAssertion.hasUserOpenedNewAccount();
 
 

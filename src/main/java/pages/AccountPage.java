@@ -10,9 +10,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-public class AccountPage extends MainPage{
+public class AccountPage extends LoggedInPage{
     public LoginAssertion loginAssertion;
     public RegistrationAssertion registrationAssertion;
+
 
     @FindBy(xpath = "//a[contains(@href,'openaccount.htm')]") private WebElement openAccountText;
 
@@ -24,15 +25,6 @@ public class AccountPage extends MainPage{
         registrationAssertion = new RegistrationAssertion(driver);
 
     }
-
-    public OpenAccountPage openNewAccount (){
-        openAccountText.click();
-        return new OpenAccountPage(driver);
-    }
-
-
-
-
 
 
 }

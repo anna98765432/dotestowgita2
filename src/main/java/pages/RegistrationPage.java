@@ -37,10 +37,6 @@ public class RegistrationPage extends MainPage {
         registrationAssertion = new RegistrationAssertion(driver);
     }
 
-    public RegistrationPage openRegister() {
-        driver.get("http://parabank.parasoft.com/parabank/register.htm");
-        return  this;
-    } //to moze do zmiany wywalenia
 
     public RegistrationSuccessPage clickRegister() {
         registerButton.click();

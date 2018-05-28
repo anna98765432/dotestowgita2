@@ -2,19 +2,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.*;
 
 public class LoginTest extends MainTest {
     String lvUserName;
 
     @BeforeClass
-    public void before1() {
+    @Parameters({"url"})
+    public void before1(String url) {
         lvUserName = generateRandomUsername();
-        beforeTest();
+        beforeTest(url);
         indexPage.openParabank().register().setFirstName("Mariola").setLastName("Michalska").setStreet("Wiślana").setCity("Warszawa")
                 .setState("Mazowieckie").setZipCode("31-122").setSsn("12345678").setUsername(lvUserName)
                 .setPassword("barbara123").setRepeatedPassword("barbara123").clickRegister();

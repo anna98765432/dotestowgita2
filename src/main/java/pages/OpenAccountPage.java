@@ -10,10 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import sun.applet.Main;
 
-public class OpenAccountPage extends MainPage {
+public class OpenAccountPage extends LoggedInPage {
 
-    @FindBy(xpath = "//a[contains(@href,'parabank/openaccount.htm')]")
-    private WebElement openNewAccountText;
     @FindBy(xpath = "//input[@value='Open New Account']")
     private WebElement openNewAccountButton;
     public NewAccountAssertion newAccountAssertion;

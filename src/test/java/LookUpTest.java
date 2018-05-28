@@ -1,10 +1,7 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.IndexPage;
 import pages.LookUpPage;
 import pages.RegistrationPage;
@@ -14,12 +11,13 @@ public class LookUpTest extends MainTest {
 
 
     @BeforeClass
-    public void beforeLookUp() {
+    @Parameters({"url"})
+    public void beforeLookUp(String url) {
         lvRandomSSN = generateRandomSsn();
-        beforeTest();
+        beforeTest(url);
         indexPage.openParabank().register().setFirstName("Anna").setLastName("Jarzyna").setStreet("Malinowa")
                 .setCity("Opole").setState("Opolskie").setZipCode("21-098").setSsn(lvRandomSSN).setUsername(generateRandomUsername())
-                .setPassword("anna123").setRepeatedPassword("anna123").clickRegister().logOut();
+                .setPassword("anna123").setRepeatedPassword("anna123").clickRegister().menu.logOut();
         afterTest();
 
     }

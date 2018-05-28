@@ -23,13 +23,13 @@ public class RegistrationTest extends MainTest {
 
 
     @BeforeClass
-    public void beforeRegistration() {
-        beforeTest();
+    @Parameters({"url"})
+    public void beforeRegistration(String url) {
         randomUsername = generateRandomUsername();
         indexPage.run(new RegistrationScenario("Anna","Dopowtorzenia","Miarki","Gliwice",
                 "Slaskie","44-100","987654321",randomUsername,"barbara123",
                 "barbara123"))
-                .logOut();
+                .menu.logOut();
         afterTest();
     }
 

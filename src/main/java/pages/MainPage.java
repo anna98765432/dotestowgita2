@@ -10,6 +10,8 @@ import scenarios.Scenario;
 public abstract class MainPage {
     protected WebDriver driver;
 
+    //header i footer tu dopisac w przyszlosci
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }

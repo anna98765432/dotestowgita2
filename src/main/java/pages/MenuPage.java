@@ -9,7 +9,13 @@ import org.openqa.selenium.support.PageFactory;
 
 public class MenuPage extends MainPage{
 
+
+
     @FindBy(css = "[href*='overwiev.htm']") private WebElement accountsOverviewLink;
+    @FindBy(xpath = "//a[contains(@href,'openaccount.htm')]") private WebElement openAccountText;
+    @FindBy(xpath = "//a[contains(@href,'logout.htm')]") private WebElement logoutText;
+    @FindBy(xpath = "//a[contains(@href,'transfer.htm')]") private WebElement transferFundsText;
+    @FindBy(xpath = "//a[contains(@href,'findtrans.htm')]") private WebElement findTransText;
 
     public MenuPage(WebDriver driver) {
         super(driver);
@@ -20,6 +26,30 @@ public class MenuPage extends MainPage{
         accountsOverviewLink.click();
         return new AccountPage(driver);
     }
+
+    public OpenAccountPage openNewAccount (){
+        openAccountText.click();
+        return new OpenAccountPage(driver);
+    }
+
+    public IndexPage logOut() {
+        logoutText.click();
+        return new IndexPage(driver);
+    }
+
+    public TransferFundsPage transferFunds(){
+        transferFundsText.click();
+        return new TransferFundsPage(driver);
+
+    }
+
+    public FindTransactionsPage findTransfers(){
+        findTransText.click();
+        return new FindTransactionsPage(driver);
+
+    }
+
+
 
 
 }

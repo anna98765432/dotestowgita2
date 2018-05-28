@@ -1,9 +1,11 @@
 package scenarios;
 
 import pages.AccountPage;
+import pages.LoggedInPage;
+import pages.MenuPage;
 import pages.OpenAccountPage;
 
-public class AddAccountScenario implements Scenario <AccountPage, OpenAccountPage> {
+public class AddAccountScenario implements Scenario <MenuPage, OpenAccountPage> {
 
     private String type;
 //    private String number;
@@ -13,7 +15,7 @@ public class AddAccountScenario implements Scenario <AccountPage, OpenAccountPag
 //        this.number  = number;
     }
 
-    public OpenAccountPage run(AccountPage entry) {
+    public OpenAccountPage run(MenuPage entry) {
 
         return entry.openNewAccount()
                 .selectType(type)

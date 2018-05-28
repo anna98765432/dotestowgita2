@@ -3,6 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import pages.*;
 
 import java.util.UUID;
@@ -10,7 +11,6 @@ import java.util.UUID;
 public class MainTest {
     WebDriver driver;
     IndexPage indexPage;
-    AccountPage accountPage;
     RegistrationPage registrationPage;
     LookUpPage lookUpPage;
 
@@ -45,10 +45,12 @@ public class MainTest {
 
 
     @BeforeMethod
-    public void beforeTest() {
+    @Parameters({"url"})
+    public void beforeTest(String url) {
+
         System.setProperty("webdriver.chrome.driver", "C:\\drivers\\chromedriver.exe");
         driver = new ChromeDriver();
-        indexPage = new IndexPage(driver);
+        indexPage = new IndexPage(driver, url);
         lookUpPage = new LookUpPage(driver);
 
     }
