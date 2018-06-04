@@ -8,18 +8,18 @@ import pages.OpenAccountPage;
 public class AddAccountScenario implements Scenario <MenuPage, OpenAccountPage> {
 
     private String type;
-//    private String number;
+    private String number;
 
-    public AddAccountScenario(String type) {
+    public AddAccountScenario(String type, String number) {
         this.type = type;
-//        this.number  = number;
+        this.number  = number;
     }
 
     public OpenAccountPage run(MenuPage entry) {
 
         return entry.openNewAccount()
                 .selectType(type)
-//                .selectAccount(number)
+               .selectAccount(number)
                 .openNewAccount();
 
     }

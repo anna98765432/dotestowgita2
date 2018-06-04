@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.testng.ITestContext;
 
 import java.util.UUID;
 
@@ -31,22 +32,22 @@ public class RegistrationPage extends MainPage {
 
 
 
-    public RegistrationPage(WebDriver driver) {
-        super(driver);
+    public RegistrationPage(WebDriver driver, ITestContext context) {
+        super(driver, context);
         PageFactory.initElements(driver, this);
-        registrationAssertion = new RegistrationAssertion(driver);
+        registrationAssertion = new RegistrationAssertion(driver, context);
     }
 
 
     public RegistrationSuccessPage clickRegister() {
         registerButton.click();
-        return new RegistrationSuccessPage(driver);
+        return new RegistrationSuccessPage(driver, getContext());
 
     }
 
     public RegistrationPage clickRegisterFail() {
         registerButton.click();
-        return new RegistrationPage(driver);
+        return new RegistrationPage(driver,getContext());
 
     }
 

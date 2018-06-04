@@ -23,10 +23,11 @@ public class RegistrationTest extends MainTest {
 
 
     @BeforeClass
-    @Parameters({"url"})
-    public void beforeRegistration(String url) {
+    @Parameters({"url","firstName1","street"})
+    public void beforeRegistration(String url, String firstName1, String street) {
+        beforeTest(context, url);
         randomUsername = generateRandomUsername();
-        indexPage.run(new RegistrationScenario("Anna","Dopowtorzenia","Miarki","Gliwice",
+        indexPage.run(new RegistrationScenario(firstName1,"Dopowtorzenia",street,"Gliwice",
                 "Slaskie","44-100","987654321",randomUsername,"barbara123",
                 "barbara123"))
                 .menu.logOut();
@@ -34,8 +35,9 @@ public class RegistrationTest extends MainTest {
     }
 
     @Test
-    public void shouldRegister() {
-        indexPage.run(new RegistrationScenario("Barbara","Rabarbar","Mikołajska","Warszawa",
+    @Parameters({"firstName1","street"})
+    public void shouldRegister(String firstName1, String street) {
+        indexPage.run(new RegistrationScenario(firstName1,"Rabarbar",street,"Warszawa",
                 "Mazowieckie","30-120","12345678",generateRandomUsername(),"barbara123",
                 "barbara123"))
                 .registrationAssertion.hasUserRegisteredAccount();
@@ -43,12 +45,13 @@ public class RegistrationTest extends MainTest {
 
 
     @Test
-    public void shouldNotRegisterBecauseOfNotRepatingPassword() {
+    @Parameters({"firstName1","street"})
+    public void shouldNotRegisterBecauseOfNotRepatingPassword(String firstName1, String street) {
         indexPage.openParabank()
                 .register()
-                .setFirstName("Jan")
+                .setFirstName(firstName1)
                 .setLastName("Banan")
-                .setStreet("Aleje")
+                .setStreet(street)
                 .setCity("Kraków")
                 .setState("Małopolskie")
                 .setZipCode("30-908")
@@ -61,11 +64,12 @@ public class RegistrationTest extends MainTest {
     }
 
     @Test
-    public void shouldNotRegisterBecauseOfNotGivingLastName() {
+    @Parameters({"firstName1","street"})
+    public void shouldNotRegisterBecauseOfNotGivingLastName(String firstName1, String street) {
         indexPage.openParabank()
                 .register()
-                .setFirstName("Alicja")
-                .setStreet("Nadwiślańska")
+                .setFirstName(firstName1)
+                .setStreet(street)
                 .setCity("Wrocław")
                 .setState("Dolnośląskie")
                 .setZipCode("44-789")

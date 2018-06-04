@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.Factory;
 
 import java.util.UUID;
@@ -25,58 +26,59 @@ public class LookUpPage extends MainPage {
     private WebElement zipCodeInput;
     @FindBy(xpath = "//input[@id='ssn']")
     private WebElement ssnInput;
+    @FindBy(xpath = "//input[@value='Find My Login Info']")
+    private WebElement findLoginInfoButton;
 
 
-    public LookUpPage(WebDriver driver) {
-        super(driver);
+
+
+
+
+    public LookUpPage(WebDriver driver, ITestContext context) {
+        super(driver, context);
         PageFactory.initElements(driver, this);
     }
 
-    public void openLookUpPage() {
-        driver.get("http://parabank.parasoft.com/parabank/lookup.htm");
-    }
 
-    public void setFirstName(String firstname) {
+    public LookUpPage setFirstName(String firstname) {
         firstNameInput.sendKeys(firstname);
+        return this;
     }
 
-    public void lastFirstName(String lastname) {
+    public LookUpPage setLastName(String lastname) {
         lastNameInput.sendKeys(lastname);
+        return this;
     }
 
-    public void setStreetInput(String street) {
+    public LookUpPage setStreetInput(String street) {
         streetInput.sendKeys(street);
+        return this;
     }
 
-    public void setCityInput(String city) {
+    public LookUpPage setCityInput(String city) {
         cityInput.sendKeys(city);
+        return this;
     }
 
-    public void setStateInput(String state) {
+    public LookUpPage setStateInput(String state) {
         stateInput.sendKeys(state);
+        return this;
     }
 
-    public void setZipCode(String zipCode) {
+    public LookUpPage setZipCode(String zipCode) {
         zipCodeInput.sendKeys(zipCode);
+        return this;
     }
 
-    public void setSsn(String ssn) {
+    public LookUpPage setSsn(String ssn) {
         ssnInput.sendKeys(ssn);
+        return this;
     }
 
-    public void fillInLoginInfo(String firstName, String lastName, String addressStreet, String adressCity, String adressState,
-                                String zipCode, String SSN) {
-        firstNameInput.sendKeys(firstName);
-        lastNameInput.sendKeys(lastName);
-        streetInput.sendKeys(addressStreet);
-        cityInput.sendKeys(adressCity);
-        stateInput.sendKeys(adressState);
-        zipCodeInput.sendKeys(zipCode);
-        ssnInput.sendKeys(SSN);
-    }
 
-    public void clickFindLoginInfo() {
-        driver.findElement(By.xpath("//input[@value='Find My Login Info']")).click();
+    public LookUpPage clickFindLoginInfo() {
+        findLoginInfoButton.click();
+        return this;
     }
 
     public void passwordAndUsernameAreNotVerified() {

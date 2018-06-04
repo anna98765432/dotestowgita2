@@ -1,11 +1,18 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import pages.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 public class MainTest {
@@ -13,22 +20,9 @@ public class MainTest {
     IndexPage indexPage;
     RegistrationPage registrationPage;
     LookUpPage lookUpPage;
+    protected ITestContext context;
 
-    public RegistrationPage signIn(String name, String name2, String street, String city, String state, String postCode,
-                                   String customerNumer, String username, String password, String repeatedPassword) {
-        registrationPage.setFirstName(name);
-        registrationPage.setLastName(name2);
-        registrationPage.setStreet(street);
-        registrationPage.setCity(city);
-        registrationPage.setState(state);
-        registrationPage.setZipCode(postCode);
-        registrationPage.setSsn(customerNumer);
-        registrationPage.setUsername(username);
-        registrationPage.setPassword(password);
-        registrationPage.setRepeatedPassword(repeatedPassword);
-        return registrationPage;
 
-    }
 
 
     public String generateRandomUsername() {
@@ -46,12 +40,21 @@ public class MainTest {
 
     @BeforeMethod
     @Parameters({"url"})
-    public void beforeTest(String url) {
+
+
+    public void beforeTest(ITestContext context, String url) {
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+//        capabilities.setCapability("version","16");
+//        capabilities.setCapability("platform", Platform.WINDOWS);
 
         System.setProperty("webdriver.chrome.driver", "C:\\drivers\\chromedriver.exe");
-        driver = new ChromeDriver();
-        indexPage = new IndexPage(driver, url);
-        lookUpPage = new LookUpPage(driver);
+        try {
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        indexPage = new IndexPage(driver, context, url);
+        this.context = context;
 
     }
 

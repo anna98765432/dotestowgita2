@@ -5,15 +5,30 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
 import scenarios.Scenario;
 
 public abstract class MainPage {
     protected WebDriver driver;
+    private ITestContext context;
 
     //header i footer tu dopisac w przyszlosci
 
-    public MainPage(WebDriver driver) {
+    public MainPage(WebDriver driver, ITestContext context) {
         this.driver = driver;
+        this.context = context;
+    }
+
+    protected void setContextAttribute(String attribute, String value){
+        context.setAttribute(attribute, value);
+    }
+
+    protected String getContextAttribute(String attribute){
+        return context.getAttribute(attribute).toString();
+    }
+
+    protected ITestContext getContext(){
+        return this.context;
     }
 
     

@@ -12,7 +12,7 @@ public class LoginTest extends MainTest {
     @Parameters({"url"})
     public void before1(String url) {
         lvUserName = generateRandomUsername();
-        beforeTest(url);
+        beforeTest(context, url);
         indexPage.openParabank().register().setFirstName("Mariola").setLastName("Michalska").setStreet("Wiślana").setCity("Warszawa")
                 .setState("Mazowieckie").setZipCode("31-122").setSsn("12345678").setUsername(lvUserName)
                 .setPassword("barbara123").setRepeatedPassword("barbara123").clickRegister();
@@ -36,7 +36,6 @@ public class LoginTest extends MainTest {
                 .fillPassword("barbara123")
                 .clickLogin()
                 .loginAssertion.isUserLoggedIn();
-
     }
 
 
@@ -47,7 +46,6 @@ public class LoginTest extends MainTest {
                 .fillPassword("barbara1234")
                 .clickLogin()
                 .loginAssertion.passwordAndUsernameAreNotVerified();
-
     }
 
 }

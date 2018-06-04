@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.ITestContext;
 
 public class FindTransactionsPage extends LoggedInPage {
 
@@ -30,8 +31,8 @@ public class FindTransactionsPage extends LoggedInPage {
     private WebElement findTransactionByAmountButton;
 
 
-    public FindTransactionsPage(WebDriver driver) {
-        super(driver);
+    public FindTransactionsPage(WebDriver driver, ITestContext context) {
+        super(driver, context);
         PageFactory.initElements(driver, this);
     }
 
@@ -48,7 +49,7 @@ public class FindTransactionsPage extends LoggedInPage {
 
     public FindTransactionResultPage findTransactionById() {
         findTransactionByIdButton.click();
-        return new FindTransactionResultPage(driver);
+        return new FindTransactionResultPage(driver, getContext());
     }
 
     public FindTransactionsPage sendDateToFind(String data) {
@@ -58,7 +59,7 @@ public class FindTransactionsPage extends LoggedInPage {
 
     public FindTransactionResultPage findTransactionByDate() {
         findTransactionByDateButton.click();
-        return new FindTransactionResultPage(driver);
+        return new FindTransactionResultPage(driver, getContext());
     }
 
     public FindTransactionsPage sendDateToFindByRangeFrom(String data) {
@@ -73,7 +74,7 @@ public class FindTransactionsPage extends LoggedInPage {
 
     public FindTransactionResultPage findTransactionByDateRange() {
         findTransactionByDateButton.click();
-        return new FindTransactionResultPage(driver);
+        return new FindTransactionResultPage(driver, getContext());
     }
 
     public FindTransactionsPage sendAmountToFind(String amount) {
@@ -83,7 +84,7 @@ public class FindTransactionsPage extends LoggedInPage {
 
     public FindTransactionResultPage findTransactionByAmount() {
         findTransactionByAmountButton.click();
-        return new FindTransactionResultPage(driver);
+        return new FindTransactionResultPage(driver, getContext());
     }
 
 

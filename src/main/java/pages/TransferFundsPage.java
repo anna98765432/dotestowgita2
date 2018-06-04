@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.ITestContext;
 
 public class TransferFundsPage extends LoggedInPage {
     @FindBy (css= "input[id='amount']") private WebElement amountInput;
@@ -15,8 +16,8 @@ public class TransferFundsPage extends LoggedInPage {
 
 
 
-    public TransferFundsPage(WebDriver driver) {
-        super(driver);
+    public TransferFundsPage(WebDriver driver, ITestContext context) {
+        super(driver, context);
         PageFactory.initElements(driver, this);
     }
 
@@ -39,7 +40,7 @@ public class TransferFundsPage extends LoggedInPage {
 
     public SuccessfulTransferPage transferFundsSuccess(){
         transferButton.click();
-        return new SuccessfulTransferPage(driver);
+        return new SuccessfulTransferPage(driver, getContext());
 
     }
 

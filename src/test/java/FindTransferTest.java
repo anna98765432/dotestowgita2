@@ -9,19 +9,30 @@ import scenarios.TransferFundsScenario;
 public class FindTransferTest extends MainTest {
 
     String randomUsername;
+    private final String ACCOUNT_TYPE = "SAVINGS";
+    private final String ACCOUNT_KEY = "accountKeyNumber";
 
     @BeforeClass
     @Parameters({"url","firstName1"})
     public void beforeTransfer(String url, String firstName1) {
 
         randomUsername = generateRandomUsername();
-        beforeTest(url);
+        beforeTest(context,url);
         indexPage.run(new RegistrationScenario(firstName1, "Dopowtorzenia", "Miarki", "Gliwice",
                 "Slaskie", "44-100", "987654321", randomUsername, "barbara123",
                 "barbara123"))
-                .menu.run(new AddAccountScenario("SAVINGS"))
-                .menu.run(new AddAccountScenario("SAVINGS"))
-                .menu.run(new AddAccountScenario("SAVINGS"))
+                .menu.openNewAccount()
+                .selectType(ACCOUNT_TYPE)
+                .selectAccountByValue(0)
+                .openNewAccount()
+                .menu.openNewAccount()
+                .selectType(ACCOUNT_TYPE)
+                .selectAccountByValue(0)
+                .openNewAccount()
+                .menu.openNewAccount()
+                .selectType(ACCOUNT_TYPE)
+                .selectAccountByValue(0)
+                .openNewAccount()
                 .menu.run(new TransferFundsScenario("150", 1, 3))
                 .menu.run(new TransferFundsScenario("120",2,3))
                 .menu.logOut();

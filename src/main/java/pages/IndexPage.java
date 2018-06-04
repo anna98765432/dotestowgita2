@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.ITestContext;
 
 public class IndexPage extends MainPage {
 
@@ -17,15 +18,15 @@ public class IndexPage extends MainPage {
     @FindBy(xpath = "//a[contains(@href,'lookup.htm')]") private WebElement forgotLoginButton;
 
 
-    public IndexPage(WebDriver driver, String url) {
-        super(driver);
+    public IndexPage(WebDriver driver, ITestContext context, String url) {
+        super(driver, context);
         PageFactory.initElements(driver, this);
         this.url = url;
     }
 
 
-    public IndexPage(WebDriver driver) {
-        super(driver);
+    public IndexPage(WebDriver driver, ITestContext context) {
+        super(driver, context);
         PageFactory.initElements(driver, this);
     }
 
@@ -50,17 +51,17 @@ public class IndexPage extends MainPage {
 
     public AccountPage clickLogin() {
         loginButton.click();
-        return new AccountPage(driver);
+        return new AccountPage(driver,getContext());
     }
 
     public RegistrationPage register() {
         registerText.click();
-        return new RegistrationPage(driver);
+        return new RegistrationPage(driver, getContext());
     }
 
     public LookUpPage remindLoginInfo() {
         forgotLoginButton.click();
-        return new LookUpPage(driver);
+        return new LookUpPage(driver, getContext());
     }
 
 

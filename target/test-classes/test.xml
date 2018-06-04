@@ -1,11 +1,12 @@
-<suite name ="Regression Suite">
+<suite name ="Regression Suite" parallel="methods" thread-count="5">
     <parameter name="url" value="http://parabank.parasoft.com"/>
     <parameter name="firstName1" value="Matylda"/>
+    <parameter name="street" value="Kochanowskiego"/>
 
 
     <test name="Account Test">
         <classes>
-            <class name="FindTransferTest"></class>
+            <class name="LookUpTest"></class>
         </classes>
     </test>
 
